@@ -17,8 +17,10 @@ async def test_admin_generate_key_success(client: AsyncClient, mock_snowflake):
     # Mock Snowflake response for the subsequent check
     mock_snowflake.post("/api/v2/statements").mock(
         return_value=httpx.Response(200, json={
+            "statementHandle": "uuid-admin-test",
             "resultSetMetaData": {"rowType": [{"name": "id"}]},
-            "data": [["1"]]
+            "data": [["1"]],
+            "code": "090001"
         })
     )
 

@@ -8,8 +8,10 @@ async def test_health_check(client, mock_snowflake):
     # Mock successful connection check
     mock_snowflake.post("/api/v2/statements").mock(
         return_value=httpx.Response(200, json={
+            "statementHandle": "uuid-health",
             "resultSetMetaData": {"rowType": [{"name": "1"}]},
-            "data": [["1"]]
+            "data": [["1"]],
+            "code": "090001"
         })
     )
     
@@ -39,12 +41,12 @@ async def test_get_companies_unauthorized(client):
     # Check new validation error format
     data = response.json()
     assert data["status"] == "error"
-    assert "Validation Error" in data["message"]
+    assert "The request inputs were invalid." in data["message"]
     
     # Let's try with invalid key
     response = await client.get("/v1/data/companies", headers={"X-API-KEY": "wrong-key"})
-    assert response.status_code == 403
-    assert response.json()["message"] == "Invalid API Key"
+    assert response.status_code == 401 # Changed from 403 to 401 in dependencies.py
+    assert response.json()["message"] == "Invalid API Key provided. Please check your credentials."
 
 @pytest.mark.asyncio
 async def test_get_companies_bad_param(client):
@@ -53,7 +55,7 @@ async def test_get_companies_bad_param(client):
     assert response.status_code == 422
     data = response.json()
     assert data["status"] == "error"
-    assert "Validation Error" in data["message"]
+    assert "The request inputs were invalid." in data["message"]
     assert "query.limit" in str(data["details"])
 
 @pytest.mark.asyncio
@@ -70,13 +72,15 @@ async def test_snowflake_connection_error(client, mock_snowflake):
 @pytest.mark.asyncio
 async def test_get_companies_success(client, mock_snowflake):
     mock_data = {
+        "statementHandle": "uuid-comp",
         "resultSetMetaData": {
             "rowType": [{"name": "id"}, {"name": "name"}]
         },
         "data": [
             ["c1", "Company 1"],
             ["c2", "Company 2"]
-        ]
+        ],
+        "code": "090001"
     }
     
     mock_snowflake.post("/api/v2/statements").mock(

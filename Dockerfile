@@ -31,9 +31,9 @@ RUN pip install --no-cache /wheels/*
 COPY . .
 
 # Change ownership
-RUN chown -R appuser:appuser /app
+# RUN chown -R appuser:appuser /app
 
-USER appuser
+# USER appuser
 
 EXPOSE 8000
 

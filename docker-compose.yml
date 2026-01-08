@@ -1,5 +1,6 @@
 services:
   api:
+    build: .
     image: ghcr.io/${GITHUB_REPOSITORY:-your-username/snowflake-api}:latest
     container_name: snowflake_api
     restart: always

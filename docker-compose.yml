@@ -7,12 +7,25 @@ services:
     restart: always
     ports:
       - "8000:8000"
+    # We keep env_file for local dev with .env, but 'environment' section overrides it if variables are set
     env_file:
       - .env
     environment:
-      # Override the path to look for the key INSIDE the container
+      # Secrets (Passed from GitHub Actions / Codespaces)
+      - SNOWFLAKE_ACCOUNT
+      - SNOWFLAKE_USER
+      - SNOWFLAKE_ROLE
+      - SNOWFLAKE_WAREHOUSE
+      - SNOWFLAKE_DATABASE
+      - SNOWFLAKE_SCHEMA
+      - SNOWFLAKE_PRIVATE_KEY_PASSPHRASE
+      - SNOWFLAKE_PRIVATE_KEY_CONTENT
+      - API_KEY
+      - ADMIN_SECRET
+      - APP_ENV=production
+      
+      # Paths (Fallback if content not provided)
       - SNOWFLAKE_PRIVATE_KEY_PATH=/app/secrets/rsa_key.p8
     volumes:
-      # Mount the local key file to the container's secret folder
-      # CHANGE ./rsa_key.p8 to your actual key location on the server
+      # Mount the local key file (optional now, since we have CONTENT variable)
       - ./rsa_key.p8:/app/secrets/rsa_key.p8:ro

@@ -24,6 +24,14 @@ services:
       - ADMIN_SECRET
       - APP_ENV=production
       
+      # Configuration (Optional, defaults in code)
+      - LOG_LEVEL
+      - RATE_LIMIT_HEALTH
+      - RATE_LIMIT_PRODUCTS
+      - RATE_LIMIT_PRODUCT_DETAIL
+      - DEFAULT_PAGE_LIMIT
+      - MAX_PAGE_LIMIT
+
       # Paths (Fallback if content not provided)
       - SNOWFLAKE_PRIVATE_KEY_PATH=/app/secrets/rsa_key.p8
     volumes:

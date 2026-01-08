@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  api:
+    image: ghcr.io/${GITHUB_REPOSITORY:-your-username/snowflake-api}:latest
+    container_name: snowflake_api
+    restart: always
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Override the path to look for the key INSIDE the container
+      - SNOWFLAKE_PRIVATE_KEY_PATH=/app/secrets/rsa_key.p8
+    volumes:
+      # Mount the local key file to the container's secret folder
+      # CHANGE ./rsa_key.p8 to your actual key location on the server
+      - ./rsa_key.p8:/app/secrets/rsa_key.p8:ro

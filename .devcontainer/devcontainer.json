@@ -21,17 +21,5 @@
 			"onAutoForward": "notify"
 		}
 	},
-	"remoteUser": "appuser",
-	"remoteEnv": {
-		"SNOWFLAKE_ACCOUNT": "${localEnv:SNOWFLAKE_ACCOUNT}",
-		"SNOWFLAKE_USER": "${localEnv:SNOWFLAKE_USER}",
-		"SNOWFLAKE_ROLE": "${localEnv:SNOWFLAKE_ROLE}",
-		"SNOWFLAKE_WAREHOUSE": "${localEnv:SNOWFLAKE_WAREHOUSE}",
-		"SNOWFLAKE_DATABASE": "${localEnv:SNOWFLAKE_DATABASE}",
-		"SNOWFLAKE_SCHEMA": "${localEnv:SNOWFLAKE_SCHEMA}",
-		"SNOWFLAKE_PRIVATE_KEY_PASSPHRASE": "${localEnv:SNOWFLAKE_PRIVATE_KEY_PASSPHRASE}",
-		"SNOWFLAKE_PRIVATE_KEY_CONTENT": "${localEnv:SNOWFLAKE_PRIVATE_KEY_CONTENT}",
-		"API_KEY": "${localEnv:API_KEY}",
-		"ADMIN_SECRET": "${localEnv:ADMIN_SECRET}"
-	}
+	"remoteUser": "appuser"
 }

@@ -1,0 +1,16 @@
+
+[Unit]
+Description=Snowflake Data Product API
+After=network.target
+
+[Service]
+User=appuser
+Group=appuser
+WorkingDirectory=/opt/snowflake_api
+EnvironmentFile=/opt/snowflake_api/.env
+ExecStart=/usr/local/bin/gunicorn -c deployment/gunicorn.conf.py app.main:app
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

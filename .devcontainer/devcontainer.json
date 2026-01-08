@@ -5,6 +5,7 @@
 	],
 	"service": "api",
 	"workspaceFolder": "/app",
+	"initializeCommand": "touch .env",
 	"customizations": {
 		"vscode": {
 			"extensions": [

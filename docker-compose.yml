@@ -5,10 +5,9 @@ services:
     restart: always
     ports:
       - "8000:8000"
-    # We keep env_file for local dev with .env, but 'environment' section overrides it if variables are set
-    env_file:
-      - path: .env
-        required: false
+    # We rely on pass-through environment variables.
+    # Locally, Docker Compose automatically reads .env to populate these.
+    # In Codespaces, GitHub Secrets populate these.
     environment:
       # Secrets (Passed from GitHub Actions / Codespaces)
       - SNOWFLAKE_ACCOUNT

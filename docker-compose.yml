@@ -32,6 +32,7 @@ services:
 
       # Paths (Fallback if content not provided)
       - SNOWFLAKE_PRIVATE_KEY_PATH=/app/secrets/rsa_key.p8
-    volumes:
-      # Mount the local key file (optional now, since we have CONTENT variable)
-      - ./rsa_key.p8:/app/secrets/rsa_key.p8:ro
+    
+    # Overriding command to keep container running for debugging if app fails
+    # In production you would remove this
+    command: /bin/bash -c "while sleep 1000; do :; done"

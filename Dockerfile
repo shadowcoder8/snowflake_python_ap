@@ -21,7 +21,7 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Create a non-root user
-RUN groupadd -r appuser && useradd -r -g appuser appuser
+RUN groupadd -r appuser && useradd -r -m -g appuser appuser
 
 COPY --from=builder /app/wheels /wheels
 COPY --from=builder /app/requirements.txt .

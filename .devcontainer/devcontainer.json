@@ -13,6 +13,13 @@
 			]
 		}
 	},
+	"forwardPorts": [8000],
+	"portsAttributes": {
+		"8000": {
+			"label": "Snowflake API",
+			"onAutoForward": "notify"
+		}
+	},
 	"remoteUser": "appuser",
 	"remoteEnv": {
 		"SNOWFLAKE_ACCOUNT": "${localEnv:SNOWFLAKE_ACCOUNT}",

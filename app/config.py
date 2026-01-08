@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     SNOWFLAKE_ROLE: str
     SNOWFLAKE_DATABASE: str
     SNOWFLAKE_SCHEMA: str
-    SNOWFLAKE_PRIVATE_KEY_PATH: str
+    SNOWFLAKE_PRIVATE_KEY_PATH: Optional[str] = "rsa_key.p8"
+    SNOWFLAKE_PRIVATE_KEY_CONTENT: Optional[str] = None # Support for passing key as env var (Codespaces Secrets/Render)
     SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: Optional[str] = None
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)

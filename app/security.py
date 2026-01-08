@@ -27,13 +27,19 @@ def load_private_key():
         return _PRIVATE_KEY_CACHE
         
     try:
-        logger.info(f"Loading private key from: {os.path.abspath(settings.SNOWFLAKE_PRIVATE_KEY_PATH)}")
-        with open(settings.SNOWFLAKE_PRIVATE_KEY_PATH, "rb") as key_file:
-            private_key = serialization.load_pem_private_key(
-                key_file.read(),
-                password=settings.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE.encode() if settings.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE else None,
-                backend=default_backend()
-            )
+        if settings.SNOWFLAKE_PRIVATE_KEY_CONTENT:
+            logger.info("Loading private key from environment variable (SNOWFLAKE_PRIVATE_KEY_CONTENT)")
+            key_bytes = settings.SNOWFLAKE_PRIVATE_KEY_CONTENT.encode()
+        else:
+            logger.info(f"Loading private key from file: {os.path.abspath(settings.SNOWFLAKE_PRIVATE_KEY_PATH)}")
+            with open(settings.SNOWFLAKE_PRIVATE_KEY_PATH, "rb") as key_file:
+                key_bytes = key_file.read()
+
+        private_key = serialization.load_pem_private_key(
+            key_bytes,
+            password=settings.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE.encode() if settings.SNOWFLAKE_PRIVATE_KEY_PASSPHRASE else None,
+            backend=default_backend()
+        )
         _PRIVATE_KEY_CACHE = private_key
         return private_key
     except Exception as e:

@@ -11,12 +11,27 @@ echo "----------------------------------------------------------------"
 
 # 1. Update System
 echo "[1/6] Updating system packages..."
-sudo dnf update -y
+if command -v dnf &> /dev/null; then
+    sudo dnf update -y
+elif command -v yum &> /dev/null; then
+    sudo yum update -y
+elif command -v apt-get &> /dev/null; then
+    sudo apt-get update -y
+else
+    echo "❌ Error: No supported package manager found (dnf, yum, or apt)."
+    exit 1
+fi
 
 # 2. Install Git
 if ! command -v git &> /dev/null; then
     echo "[2/6] Installing Git..."
-    sudo dnf install -y git
+    if command -v dnf &> /dev/null; then
+        sudo dnf install -y git
+    elif command -v yum &> /dev/null; then
+        sudo yum install -y git
+    elif command -v apt-get &> /dev/null; then
+        sudo apt-get install -y git
+    fi
 else
     echo "[2/6] Git is already installed."
 fi
@@ -24,9 +39,27 @@ fi
 # 3. Install Docker & Docker Compose
 if ! command -v docker &> /dev/null; then
     echo "[3/6] Installing Docker..."
-    sudo dnf install -y dnf-plugins-core
-    sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    if command -v dnf &> /dev/null; then
+        sudo dnf install -y dnf-plugins-core
+        sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+        sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    elif command -v yum &> /dev/null; then
+        sudo yum install -y yum-utils
+        sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+        sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    elif command -v apt-get &> /dev/null; then
+        sudo apt-get install -y ca-certificates curl gnupg
+        sudo install -m 0755 -d /etc/apt/keyrings
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+        sudo chmod a+r /etc/apt/keyrings/docker.gpg
+        echo \
+          "deb [arch=\"$(dpkg --print-architecture)\" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+          \"$(. /etc/os-release && echo "$VERSION_CODENAME")\" stable" | \
+          sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    fi
+    
     sudo systemctl start docker
     sudo systemctl enable docker
     # Add current user to docker group

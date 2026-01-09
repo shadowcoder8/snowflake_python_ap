@@ -97,3 +97,17 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
     3.  **Install Tailscale** on your Laptop/Phone and login.
     4.  Access via the **MagicDNS** name or Tailscale IP (e.g., `http://100.x.y.z`).
     5.  You do NOT need to open any firewall ports for this.
+
+    ### 🌐 Option 4: No-IP (Free Domain Name)
+
+    If you want a free custom name like `myapp.ddns.net` instead of an IP address:
+
+    1.  **Log in to No-IP** and create a Hostname (A Record).
+    2.  **Enter your VM's Public IP** address into No-IP.
+    3.  Now you can visit `http://myapp.ddns.net`.
+    4.  **Note:** This **DOES NOT** hide your IP address. Attackers can still see your server location.
+    5.  **Note:** You must still open Port 80 in your firewall (see instructions above).
+
+
+
+

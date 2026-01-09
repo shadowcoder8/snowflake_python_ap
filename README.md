@@ -75,3 +75,15 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
         *   **URL:** `localhost:80` (or `snowflake_nginx:80` if running cloudflared in docker)
     
     This way, users only see Cloudflare's IP, and your origin server remains hidden.
+
+    ### ⚡ Option 2: Quick Tunnel (No Domain Needed)
+    
+    If you don't have a domain, you can use a temporary random URL for free.
+    
+    1.  **Install `cloudflared`** on your VM (Google "install cloudflared linux").
+    2.  Run this command:
+        ```bash
+        cloudflared tunnel --url http://localhost:80
+        ```
+    3.  It will print a URL like `https://funny-name-123.trycloudflare.com`.
+    4.  You can share this URL. **Note:** It changes every time you restart the command.

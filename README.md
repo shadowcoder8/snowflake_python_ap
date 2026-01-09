@@ -47,6 +47,14 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
     sudo ufw reload
     ```
 
-    **Option C: Oracle Cloud / AWS / Azure (Cloud Console)**
-    *   Go to your Cloud Console > Networking > Security Lists / Security Groups.
-    *   Add an **Ingress Rule** to allow TCP traffic on **Port 80** from `0.0.0.0/0`.
+    **Option C: Oracle Cloud (OCI) Console Steps**
+    1.  Log in to **Oracle Cloud Console**.
+    2.  Navigate to **Compute** -> **Instances** and click your instance.
+    3.  Click the link under **Subnet** (in the "Primary VNIC" section).
+    4.  Click the **Security List** name (e.g., "Default Security List...").
+    5.  Click **Add Ingress Rules**.
+    6.  Enter the following:
+        *   **Source CIDR:** `0.0.0.0/0`
+        *   **IP Protocol:** `TCP`
+        *   **Destination Port Range:** `80` (Add another rule for `443` if using HTTPS)
+    7.  Click **Add Ingress Rules**.

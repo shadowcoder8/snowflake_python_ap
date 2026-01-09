@@ -101,7 +101,13 @@ fi
 
 # 6. Start Application
 echo "[6/6] Starting application with Docker Compose..."
-docker compose -f docker-compose.prod.yml up -d --build
+# Check if user can run docker without sudo
+if docker info >/dev/null 2>&1; then
+    docker compose -f docker-compose.prod.yml up -d --build
+else
+    echo "⚠️  User permission denied for Docker. Running with sudo..."
+    sudo docker compose -f docker-compose.prod.yml up -d --build
+fi
 
 echo "----------------------------------------------------------------"
 echo "✅ Deployment Complete!"

@@ -76,14 +76,24 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
     
     This way, users only see Cloudflare's IP, and your origin server remains hidden.
 
-    ### ⚡ Option 2: Quick Tunnel (No Domain Needed)
-    
+    ### ⚡ Option 2: Quick Tunnel (Free, No Domain Needed)
+
     If you don't have a domain, you can use a temporary random URL for free.
-    
-    1.  **Install `cloudflared`** on your VM (Google "install cloudflared linux").
+
+    1.  **Install `cloudflared`** on your VM.
     2.  Run this command:
         ```bash
         cloudflared tunnel --url http://localhost:80
         ```
     3.  It will print a URL like `https://funny-name-123.trycloudflare.com`.
-    4.  You can share this URL. **Note:** It changes every time you restart the command.
+    4.  You can share this URL. It changes every time you restart.
+
+    ### 🔒 Option 3: Tailscale (Private VPN)
+
+    If you only want **YOU** to access the server (and keep it hidden from the entire internet):
+
+    1.  **Install Tailscale** on your VM: `curl -fsSL https://tailscale.com/install.sh | sh`
+    2.  **Start it:** `sudo tailscale up` (Login with Google/Microsoft).
+    3.  **Install Tailscale** on your Laptop/Phone and login.
+    4.  Access via the **MagicDNS** name or Tailscale IP (e.g., `http://100.x.y.z`).
+    5.  You do NOT need to open any firewall ports for this.

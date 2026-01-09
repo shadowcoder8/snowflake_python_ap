@@ -65,7 +65,10 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
 
     1.  **Sign up for Cloudflare** and add your domain.
     2.  Go to **Zero Trust > Networks > Tunnels**.
-    3.  Create a tunnel and choose **Debian/RedHat** (based on your OS).
+    3.  Create a tunnel and choose your OS type:
+        *   **For Oracle Linux:** Choose **Red Hat / CentOS**.
+        *   **For Ubuntu:** Choose **Debian**.
+        *   *(Avoid selecting "Docker" here unless you are comfortable configuring Docker networks).*
     4.  Run the provided installation command on your VM.
     5.  In the tunnel configuration, map your domain (e.g., `api.yourdomain.com`) to the local Docker service:
         *   **Service:** `HTTP`

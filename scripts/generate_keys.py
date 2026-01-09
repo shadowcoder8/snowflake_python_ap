@@ -20,4 +20,4 @@ if __name__ == "__main__":
     print(f"\nAdd this to your .env file:")
     print(f"API_KEY={key}")
     print("\nFor multiple keys (key rotation), separate them with a comma:")
-    print(f"API_KEY={key},another-key-here")
+    print("API_KEY=<primary-key>,<secondary-key>")

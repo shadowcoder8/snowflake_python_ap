@@ -12,6 +12,7 @@ services:
       - APP_ENV=production
     volumes:
       - ./logs:/app/logs
+      - ./rsa_key.p8:/app/rsa_key.p8:ro
 
   nginx:
     image: nginx:alpine

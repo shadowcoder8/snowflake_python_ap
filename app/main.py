@@ -26,6 +26,7 @@ from app.utils import generate_secure_key, TTLCache
 from app.key_manager import key_manager
 from app.registry import VIEW_ALLOWLIST
 from app.middleware import AuditMiddleware
+from app.scheduler import start_scheduler, stop_scheduler
 
 # Initialize Cache (stores up to 100 queries for 5 minutes)
 response_cache = TTLCache(ttl_seconds=300)
@@ -41,9 +42,11 @@ limiter = Limiter(key_func=get_rate_limit_key)
 async def lifespan(app: FastAPI):
     # Startup
     logger.info("Starting up Data Product API...")
+    start_scheduler()
     yield
     # Shutdown
     logger.info("Shutting down...")
+    stop_scheduler()
     await snowflake_client.close()
 
 app = FastAPI(

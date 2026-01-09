@@ -58,3 +58,17 @@ To deploy this application on an Oracle Linux VM (or any RHEL-based system):
         *   **IP Protocol:** `TCP`
         *   **Destination Port Range:** `80` (Add another rule for `443` if using HTTPS)
     7.  Click **Add Ingress Rules**.
+
+    ### 🔒 Hiding Your Server IP (Advanced)
+    
+    If you do not want to expose your VM's Public IP directly, you can use **Cloudflare Tunnel** (Zero Trust). This requires no open ports (you can even close Port 80/443).
+
+    1.  **Sign up for Cloudflare** and add your domain.
+    2.  Go to **Zero Trust > Networks > Tunnels**.
+    3.  Create a tunnel and choose **Debian/RedHat** (based on your OS).
+    4.  Run the provided installation command on your VM.
+    5.  In the tunnel configuration, map your domain (e.g., `api.yourdomain.com`) to the local Docker service:
+        *   **Service:** `HTTP`
+        *   **URL:** `localhost:80` (or `snowflake_nginx:80` if running cloudflared in docker)
+    
+    This way, users only see Cloudflare's IP, and your origin server remains hidden.
